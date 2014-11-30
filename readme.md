@@ -2,6 +2,10 @@
 
 This repository contains Katas, I've touched. Mostly coming from Codewars.
 
-### Okay, I only see a readme. Where are they?  ###
+#### Okay, I only see a readme. Where are they?  ####
 
-THe way this works is with a branch by language :)
+The way this works is with a branch by language :)
+
+#### Anymore advice? ####
+
+There will be languange specific information on the readme for every branch.
