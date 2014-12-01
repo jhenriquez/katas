@@ -12,18 +12,10 @@ When throwing a TypeError, the message should be n is invalid, where you replace
 
 */
 
-function isInt(value) {
-  return !isNaN(value) && 
-         parseInt(Number(value)) == value && 
-         !isNaN(parseInt(value, 10));
-}
-
 function prefill (n, v) {
-	if (isNaN(n) || (+n) < 0 || n != parseInt(n,10)) {
-		throw TypeError(n + ' is invalid');
-	}
+	if (isNaN(n) || (+n) < 0 || n != parseInt(n,10)) { throw TypeError(n + ' is invalid'); }
 
-	if (+n === 0) return [];
+	if (+n === 0) { return []; }
 
 	return [typeof(v) === 'function' ? v() : v].concat(prefill((+n)-1,v));
 }

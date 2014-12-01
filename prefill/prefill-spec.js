@@ -44,5 +44,9 @@ describe('Prefill', function () {
 		it('should throw TypeError with message "xyz is invalid" for prefill("xyz", 1)', function () {
 			(function () { prefill("xyz",1); }).should.throw(TypeError, /xyz is invalid/);
 		});
+
+		it('should work with big numbers. 10000', function () {
+			prefill(10000,1).should.be.a('Array').with.length(10000);
+		});
 	});
 });
