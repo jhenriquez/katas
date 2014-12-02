@@ -1,0 +1,27 @@
+{
+  "name": "katas",
+  "version": "0.1.0",
+  "description": "Katas written in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhenriquez/katas"
+  },
+  "keywords": [
+    "JavaScript",
+    "Katas",
+    "Codewars"
+  ],
+  "author": "Julio Henriquez",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/jhenriquez/katas/issues"
+  },
+  "homepage": "https://github.com/jhenriquez/katas",
+  "devDependencies": {
+    "chai": "^1.10.0"
+  }
+}
