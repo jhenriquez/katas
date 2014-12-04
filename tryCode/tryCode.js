@@ -1,18 +1,18 @@
-var code = [];
+module.exports = (function () {
+	var code = [];
 
-function randomInt(max, min) {
-	return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function tryCode(indications, previous) {
-	if (!indications) {
-		 previous = [randomInt(9,0), randomInt(9,0), randomInt(9,0)];
-		 return previous;
+	function randomInt(max, min) {
+		return Math.floor(Math.random() * (max - min)) + min;
 	}
-	previous = indications.map(function (value, index) {
-		return previous[index] + (value * -1);
-	});
-	return previous;
-}
 
-module.exports = tryCode;
+    return function (indications) {
+		if (indications) {
+			code = indications.map(function (value, index) {
+				return code[index] = code[index] - (value * -1);
+			});
+			return code;
+		}
+		code = [randomInt(9,0), randomInt(9,0), randomInt(9,0)];
+		return code;
+    }
+})();;

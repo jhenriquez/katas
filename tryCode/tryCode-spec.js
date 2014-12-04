@@ -1,33 +1,22 @@
 var chai = require('chai').should(),
 	tryCode = require('./tryCode');
 
-describe('Case', function () {
-	it('should return 3 random numbers when indications is null.', function () {
-		var r = tryCode();
-		r.should.be.a('Array').with.length(3);
-		var r2 = tryCode();
-		r.should.not.be.eql(r2);
-	});
+function randomInt(max, min) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
 
-	describe('indications handling', function () {
-		it('should not touch a digit when indication is zero.', function () {
-			var r = tryCode();
-			var r2 = tryCode([0,0,0], r);
-			r2.should.be.eql(r);
-		});
-		it('should decrease a digit when 1 is indicated.', function () {
-			var r = tryCode();
-			var r2 = tryCode([1,0,0], r);
-			r2[0].should.be.below(r[0]);
-			r2[1].should.be.eql(r[1]);
-			r2[2].should.be.eql(r[2]);
-		});
-		it('should increase a digit when -1 is indicated.', function () {
-			var r = tryCode();
-			var r2 = tryCode([-1,0,0], r);
-			r2[0].should.be.above(r[0]);
-			r2[1].should.be.eql(r[1]);
-			r2[2].should.be.eql(r[2]);
-		});
+describe('Case', function () {
+	it('should resolve any number in a maximum of 10 calls', function () {
+		var code = [randomInt(10,0),randomInt(10,0),randomInt(10,0)];
+		var guess;
+		var indications = undefined;
+		for(var i = 0; i < 10; i++) {
+			guess = tryCode(indications);
+			indications = indications || [0,0,0];
+			indications = indications.map(function (value, index) {
+				return code[index] === guess[index] ? 0 : (code[index] > guess[index] ? 1 : -1);
+			});
+		}
+		guess.should.eql(code);
 	});
 });
