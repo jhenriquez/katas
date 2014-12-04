@@ -1,10 +1,5 @@
 module.exports = (function () {
-	var code = [];
-
-	function randomInt(max, min) {
-		return Math.floor(Math.random() * (max - min)) + min;
-	}
-
+	var code = [5,5,5];
     return function (indications) {
 		if (indications) {
 			code = indications.map(function (value, index) {
@@ -12,7 +7,6 @@ module.exports = (function () {
 			});
 			return code;
 		}
-		code = [randomInt(9,0), randomInt(9,0), randomInt(9,0)];
 		return code;
     }
 })();;
