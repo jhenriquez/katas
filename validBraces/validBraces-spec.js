@@ -22,5 +22,11 @@ describe('validBraces', function () {
 		it('should return false for "(((({{"', function () {
 			validBraces('(((({{').should.not.be.ok();
 		});
+		it('should return true for "(){{}}[]([])"', function () {
+			validBraces('(){{}}[]([])').should.be.ok();
+		});
+		it('should return false for "}"', function () {
+			validBraces('}').should.not.be.ok();
+		});
 	});
 });
