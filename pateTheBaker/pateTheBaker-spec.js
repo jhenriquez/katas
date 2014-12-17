@@ -1,5 +1,5 @@
 var chai = require('chai'),
-	cakes = require('./pateTheBaker');
+	cakes = require('./pateTheBaker-better');
 
 chai.should();
 
@@ -17,6 +17,16 @@ describe('cakes', function () {
 				{apples: 3, flour: 300, sugar: 150, milk: 100, oil: 100},
 				{sugar: 500, flour: 2000, milk: 2000}
 			).should.eql(0);
+		});
+	});
+
+	describe('extrange cases', function () {
+		it('should be able handle no recipe and no availables', function () {
+			cakes({},{}).should.eql(0);
+		});
+
+		it('should handle a recipe with no availables', function () {
+			cakes({apples: 3, flour: 300, sugar: 150, milk: 100, oil: 100},{}).should.eql(0);
 		});
 	});
 });
