@@ -88,7 +88,7 @@ describe('function lists', function () {
 				caba = ca.append(ba);
 			});
 			it('should have the sum of both lengths.', function () {
-				caba.length().should.eql(4);
+				caba.length().should.eql(ca.length() + ba.length());
 			});
 
 			it('(b a) should remain untouched.', function () {
@@ -97,6 +97,19 @@ describe('function lists', function () {
 
 			it('should read (c a b a)', function () {
 				caba.toString().should.eql('(c a b a)');
+			});
+
+			describe('removing', function () {
+				it("should read (c b) removing 'a' from (c a b a)", function () {
+					caba.remove('a').toString().should.eql('(c b)');
+				});
+
+				describe('sharing', function () {
+					it('should share the tail when the head is removed.', function () {
+						chai.expect(caba.remove('c') === caba.tail()).should.be.ok();
+					});	
+				});
+
 			});
 		});
 

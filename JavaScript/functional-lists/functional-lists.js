@@ -33,32 +33,17 @@ ListNode.prototype.toString = function() {
 ListNode.prototype.head = function() { return this.value; };
 ListNode.prototype.tail = function() { return this.next;  };
 ListNode.prototype.length = function() {
-	var length = 0;
-	var node = this;
-	while(node instanceof ListNode) { length++; node = node.tail(); }
-	return length;
+	return 1 + this.tail().length();
 };
 ListNode.prototype.push = function(x) { return new ListNode(x, this); };
 ListNode.prototype.remove = function(x) {
-	var newList = new EmptyList();
-	var node = this;
-	while(node instanceof ListNode) {
-		if (node.head() !== x) {
-			newList = newList.append(node);
-		}
-		node = node.tail();
-	}
-	return newList;
+	return this.head() === x ? this.tail().remove(x) : new ListNode(this.head(),this.tail().remove(x));
 };
 ListNode.prototype.append = function(xs) {
-	var heads = [];
-	var newList;
-	var node = this;
-	while(node instanceof ListNode) { heads.push(node.head()); node = node.tail(); }
-	for(var i = heads.length - 1; i >= 0; i--) {
-		newList = newList && newList.push(heads[i]) || new ListNode(heads[i],xs);
+	function collectTail(l) {
+		return l.tail() instanceof EmptyList ? xs.push(l.head()) : collectTail(l.tail());
 	}
-	return newList;
+	return this.length() > 1 ? collectTail(this).push(this.head()) : xs.push(this.head());
 };
 
 module.exports.Empty = EmptyList;
