@@ -44,6 +44,8 @@ ListNode.prototype.append = function(xs) {
 		return l.tail() instanceof EmptyList ? xs.push(l.head()) : collectTail(l.tail());
 	}
 	return this.length() > 1 ? collectTail(this).push(this.head()) : xs.push(this.head());
+	
+	//return this.tail() instanceof EmptyList ? xs.push(this.head()) : this.tail().append(xs);
 };
 
 module.exports.Empty = EmptyList;

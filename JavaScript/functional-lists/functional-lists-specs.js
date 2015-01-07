@@ -99,6 +99,26 @@ describe('function lists', function () {
 				caba.toString().should.eql('(c a b a)');
 			});
 
+			describe('more complex appends', function () {
+				it('should read (a b c a b c) when appending (a b c) twice', function () {
+					var l1 = new lists.Empty().push('c').push('b').push('a');
+					l1.append(l1).toString().should.eql('(a b c a b c)');
+				});
+
+				it('should be able to append 5 item lists or more', function () {
+					var l5 = new lists.Empty().push(4).push(3).push(2).push(2).push(1).push(0);
+					var l10 = l5.append(l5);
+					l10.length().should.eql(10);
+					l10.toString().should.eql('(0 1 2 3 4 0 1 2 3 4)');
+				});
+
+				it('should be able to append 5 item lists or more toString', function () {
+					var l5 = new lists.Empty().push(4).push(3).push(2).push(2).push(1).push(0);
+					var l10 = l5.append(l5);
+					l10.toString().should.eql('(0 1 2 3 4 0 1 2 3 4)');
+				});
+			});
+
 			describe('removing', function () {
 				it("should read (c b) removing 'a' from (c a b a)", function () {
 					caba.remove('a').toString().should.eql('(c b)');
