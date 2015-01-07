@@ -72,13 +72,41 @@ describe('function lists', function () {
 			listNode.head().should.eql(1);
 		});
 
+		it('should return (1 2) for new ListNode(1).append(new ListNode(2)).toString()', function () {
+			var list2 = new lists.Node(2);
+			var list12 = listNode.append(list2);
+			list12.toString().should.eql('(1 2)');
+		});
+
+		describe('appending (b a) to (c a)', function () {
+			var ba;
+			var ca;
+			var baca;
+			beforeEach(function () {
+				ca = new lists.Node('a').push('c');
+				ba = new lists.Node('a').push('b');
+				caba = ca.append(ba);
+			});
+			it('should have the sum of both lengths.', function () {
+				caba.length().should.eql(4);
+			});
+
+			it('(b a) should remain untouched.', function () {
+				caba.tail().tail().should.eql(ba);
+			});
+
+			it('should read (c a b a)', function () {
+				caba.toString().should.eql('(c a b a)');
+			});
+		});
+
 		describe('push', function () {
 			it('should return a ListNode', function () {
 				listNode.push('some value').should.be.instanceof(lists.Node);
 			});
 
 			it('should return itself as the next value in the returned node.', function () {
-				listNode.push('some value').next.should.eql(listNode);
+				listNode.push('some value').tail().should.eql(listNode);
 			});
 		});
 	});

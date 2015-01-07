@@ -20,14 +20,14 @@ ListNode.prototype = new List();
 ListNode.prototype.constructor = ListNode;
 ListNode.prototype.isEmpty = function() { return false; };
 
-ListNode.prototype.toString = function() {
-	var str = '(';
+ListNode.prototype.toString = function() {	
+	var str = '';
 	var node = this;
 	while(node instanceof ListNode) {
-		str += node.value + ' ';
-		node = node.next; 
+		str += node.head();
+		node = node.tail(); 
 	}
-	return str.trim()  + ')';
+	return '(' + str.split('').join(' ')  + ')';
 };
 
 ListNode.prototype.head = function() { return this.value; };
@@ -35,7 +35,7 @@ ListNode.prototype.tail = function() { return this.next;  };
 ListNode.prototype.length = function() {
 	var length = 0;
 	var node = this;
-	while(node instanceof ListNode) { length++; node = node.next; }
+	while(node instanceof ListNode) { length++; node = node.tail(); }
 	return length;
 };
 ListNode.prototype.push = function(x) { return new ListNode(x, this); };
@@ -43,18 +43,21 @@ ListNode.prototype.remove = function(x) {
 	var newList = new EmptyList();
 	var node = this;
 	while(node instanceof ListNode) {
-		if (node.value !== x) {
-			newList = newList.push(node);
+		if (node.head() !== x) {
+			newList = newList.append(node);
 		}
+		node = node.tail();
 	}
 	return newList;
 };
 ListNode.prototype.append = function(xs) {
-	var newList = new EmptyList();
+	var heads = [];
+	var newList;
 	var node = this;
-	while(node instanceof ListNode) { newList.push(node); node = node.next; }
-	var node = xs;
-	while(node) { newList.push(node); node = node.next; }
+	while(node instanceof ListNode) { heads.push(node.head()); node = node.tail(); }
+	for(var i = heads.length - 1; i >= 0; i--) {
+		newList = newList && newList.push(heads[i]) || new ListNode(heads[i],xs);
+	}
 	return newList;
 };
 
