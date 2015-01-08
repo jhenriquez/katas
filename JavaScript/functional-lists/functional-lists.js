@@ -21,13 +21,10 @@ ListNode.prototype.constructor = ListNode;
 ListNode.prototype.isEmpty = function() { return false; };
 
 ListNode.prototype.toString = function() {	
-	var str = '';
-	var node = this;
-	while(node instanceof ListNode) {
-		str += node.head();
-		node = node.tail(); 
+	function collect(l) {
+		return (l instanceof EmptyList) ? '' : l.head() + collect(l.tail());
 	}
-	return '(' + str.split('').join(' ')  + ')';
+	return '(' + collect(this).split('').join(' ')  + ')';
 };
 
 ListNode.prototype.head = function() { return this.value; };
@@ -37,16 +34,21 @@ ListNode.prototype.length = function() {
 };
 ListNode.prototype.push = function(x) { return new ListNode(x, this); };
 ListNode.prototype.remove = function(x) {
-	return this.head() === x ? this.tail().remove(x) : new ListNode(this.head(),this.tail().remove(x));
+	function collect(l) {
+		return (l instanceof EmptyList)? [l] : ((l.head() === x) ? [] : [new ListNode(l.head())]).concat(collect(l.tail()));
+	}
+	
+	return collect(this)
+		.reduce(function (xs, l) {
+			return xs && xs.append(l) || l;
+		});
 };
 ListNode.prototype.append = function(xs) {
-	function collectTail(l) {
-		return l.tail() instanceof EmptyList ? xs.push(l.head()) : collectTail(l.tail());
+	function collect(l, acc) {
+		return (l instanceof EmptyList) ? [l] : [l.head()].concat(collect(l.tail()));
 	}
-	return this.length() > 1 ? collectTail(this).push(this.head()) : xs.push(this.head());
-	
-	//return this.tail() instanceof EmptyList ? xs.push(this.head()) : this.tail().append(xs);
+	return collect(this).reverse().reduce(function (l, value) { return l.push(value); }, xs);
 };
 
 module.exports.Empty = EmptyList;
-module.exports.Node = ListNode;	
+module.exports.Node = ListNode;
