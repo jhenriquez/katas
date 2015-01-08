@@ -106,14 +106,14 @@ describe('function lists', function () {
 				});
 
 				it('should be able to append 5 item lists or more', function () {
-					var l5 = new lists.Empty().push(4).push(3).push(2).push(2).push(1).push(0);
+					var l5 = new lists.Empty().push(4).push(3).push(2).push(1).push(0);
 					var l10 = l5.append(l5);
 					l10.length().should.eql(10);
 					l10.toString().should.eql('(0 1 2 3 4 0 1 2 3 4)');
 				});
 
 				it('should be able to append 5 item lists or more toString', function () {
-					var l5 = new lists.Empty().push(4).push(3).push(2).push(2).push(1).push(0);
+					var l5 = new lists.Empty().push(4).push(3).push(2).push(1).push(0);
 					var l10 = l5.append(l5);
 					l10.toString().should.eql('(0 1 2 3 4 0 1 2 3 4)');
 				});
@@ -124,10 +124,21 @@ describe('function lists', function () {
 					caba.remove('a').toString().should.eql('(c b)');
 				});
 
+				it('removing a from (a) should be EmptyList', function () {
+					new lists.Node('a').remove('a').should.be.instanceof(lists.Empty);
+				});
+
+				it('remove first from (1) is empty', function () {
+					new lists.Node('a').remove('a').isEmpty().should.be.ok();
+				});
+
 				describe('sharing', function () {
 					it('should share the tail when the head is removed.', function () {
-						chai.expect(caba.remove('c') === caba.tail()).should.be.ok();
-					});	
+						caba.remove('c').should.eql(caba.tail());
+					});
+					it('remove caba head is caba tail', function () {
+						caba.remove(caba.head()).should.eql(caba.tail());
+					});
 				});
 
 			});
