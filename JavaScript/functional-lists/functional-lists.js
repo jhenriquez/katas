@@ -35,8 +35,29 @@ ListNode.prototype.length = function() {
 ListNode.prototype.push = function(x) { return new ListNode(x, this); };
 ListNode.prototype.remove = function(x) {
 	function collect(l) {
-		return (l instanceof EmptyList)? [l] : ((l.head() === x) ? [] : [new ListNode(l.head())]).concat(collect(l.tail()));
+		//return (l instanceof EmptyList)? [l] : ((l.head() !== x) ? [new ListNode(l.head())] :  []).concat(collect(l.tail()));
 	}
+
+	/*function traverse(l) {
+	  return (l instanceof ListNode) ? (l.head() === x) ? traverse(l.tail()) : new ListNode(l.head(),traverse(l.tail())) : l;
+	}
+
+	return traverse(this);*/
+
+	function traverse(l) {
+		if (l instanceof ListNode) {
+			if (l.head() === x) {
+				return traverse(l.tail());
+			} else {
+				l.next = traverse(l.tail());
+				return l;
+			}
+		} else {
+			return l;
+		}
+	}
+
+	return traverse(this);
 	
 	return collect(this)
 		.reduce(function (xs, l) {
@@ -44,7 +65,7 @@ ListNode.prototype.remove = function(x) {
 		});
 };
 ListNode.prototype.append = function(xs) {
-	function collect(l, acc) {
+	function collect(l) {
 		return (l instanceof EmptyList) ? [] : [l.head()].concat(collect(l.tail()));
 	}
 	return collect(this).reverse().reduce(function (l, value) { return l.push(value); }, xs);
