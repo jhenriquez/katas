@@ -10,6 +10,7 @@ EmptyList.prototype.length = function() { return 0; };
 EmptyList.prototype.push = function(x) { return new ListNode(x, this); };
 EmptyList.prototype.remove = function(x) { return this; };
 EmptyList.prototype.append = function(xs) { return xs;  };
+EmptyList.prototype.count = function(x) { return 0; };
 
 function ListNode(value, next) { 
 	this.value = value;
@@ -29,40 +30,28 @@ ListNode.prototype.toString = function() {
 
 ListNode.prototype.head = function() { return this.value; };
 ListNode.prototype.tail = function() { return this.next;  };
+ListNode.prototype.count = function (x) {
+  return (this.head() === x ? 1 : 0) + this.tail().count(x);
+};
 ListNode.prototype.length = function() {
 	return 1 + this.tail().length();
 };
 ListNode.prototype.push = function(x) { return new ListNode(x, this); };
 ListNode.prototype.remove = function(x) {
-	function collect(l) {
-		//return (l instanceof EmptyList)? [l] : ((l.head() !== x) ? [new ListNode(l.head())] :  []).concat(collect(l.tail()));
-	}
-
-	/*function traverse(l) {
-	  return (l instanceof ListNode) ? (l.head() === x) ? traverse(l.tail()) : new ListNode(l.head(),traverse(l.tail())) : l;
-	}
-
-	return traverse(this);*/
-
+	var count = this.count(x);
 	function traverse(l) {
 		if (l instanceof ListNode) {
 			if (l.head() === x) {
+				count--;
 				return traverse(l.tail());
 			} else {
-				l.next = traverse(l.tail());
-				return l;
+				return count === 0 ? l : new ListNode(l.head(),traverse(l.tail()));
 			}
 		} else {
 			return l;
 		}
 	}
-
 	return traverse(this);
-	
-	return collect(this)
-		.reduce(function (xs, l) {
-			return xs && xs.append(l) || l;
-		});
 };
 ListNode.prototype.append = function(xs) {
 	function collect(l) {
