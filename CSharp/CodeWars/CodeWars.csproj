@@ -47,6 +47,8 @@
     <Compile Include="ReturnTheMissingElement\ReturnTheMissingElementSpecs.cs" />
     <Compile Include="SumOfFirstNthTermOfSeries\NthSeries.cs" />
     <Compile Include="SumOfFirstNthTermOfSeries\SumOfFirstNthTermOfSeriesSpecs.cs" />
+    <Compile Include="TheOldSwitcherooTwo\OldSwitcherooTwo.cs" />
+    <Compile Include="TheOldSwitcherooTwo\OldSwitcherooTwoSpecs.cs" />
     <Compile Include="TheOldSwitcheroo\OldSwitcheroo.cs" />
     <Compile Include="TheOldSwitcheroo\OldSwitcherooSpecs.cs" />
   </ItemGroup>
